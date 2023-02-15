@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "test-django-rest"
+version = "0.1.0"
+description = ""
+authors = ["DaniilMashkov <dankeeeez@gmail.com>"]
+readme = "README.md"
+packages = [{include = "test_django_rest"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+djangorestframework = "^3.14.0"
+python-dotenv = "^0.21.1"
+django = "^4.1.7"
+pillow = "^9.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
