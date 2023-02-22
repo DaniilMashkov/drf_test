@@ -15,4 +15,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'avatar', 'phone', 'city', 'payments')
+        fields = ('email', 'password', 'avatar', 'phone', 'city', 'payments')
+
+
+class ForeignUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'avatar', 'phone', 'city')
