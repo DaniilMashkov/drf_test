@@ -34,3 +34,4 @@ class LessonCreateAPIView(generics.CreateAPIView):
 class LessonDestroyAPIView(generics.DestroyAPIView):
     serializer_class = LessonSerializer
     permission_classes = [IsAdminUser]
+    queryset = Lesson.objects.all()

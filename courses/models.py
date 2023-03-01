@@ -10,3 +10,9 @@ class Course(models.Model):
     class Meta:
         verbose_name = 'course'
         verbose_name_plural = 'courses'
+
+
+class Subscription(models.Model):
+    status = models.BooleanField(default=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)

@@ -1,5 +1,6 @@
-from rest_framework import viewsets
-from users.serializers import CustomUserSerializer, CustomUser, ForeignUserSerializer
+from rest_framework import viewsets, generics, mixins
+from users.serializers import CustomUserSerializer, CustomUser, ForeignUserSerializer,\
+    SubscriptionSerializer, Subscription
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from config.permissions import ProfilePermission
 
@@ -29,3 +30,20 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             return CustomUserSerializer
         else:
             return ForeignUserSerializer
+
+
+class SubscriptionAPIView(mixins.CreateModelMixin, generics.ListAPIView):
+    serializer_class = SubscriptionSerializer
+
+    def get_queryset(self):
+        return Subscription.objects.filter(user_id=self.request.user.pk)
+
+    def post(self, *args, **kwargs):
+        return super().create(*args, **kwargs)
+
+
+class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = SubscriptionSerializer
+
+    def get_queryset(self):
+        return Subscription.objects.filter(user_id=self.request.user.pk)
