@@ -9,3 +9,4 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = ('name', 'description', 'preview', 'link', 'course')
         validators = [LinkValidator(field='model')]
+        ref_name = 'lessons'

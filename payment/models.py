@@ -11,6 +11,9 @@ class Payment(models.Model):
     date = models.DateTimeField(auto_now=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     method = models.CharField(choices=payment_methods, max_length=30)
+    purchase_id = models.IntegerField(**NULLABLE)
+    hash_key = models.CharField(max_length=254, **NULLABLE)
+    status = models.CharField(max_length=100)
 
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, **NULLABLE)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, **NULLABLE)

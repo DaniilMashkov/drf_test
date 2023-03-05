@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
+    'django_celery_beat',
 
     'rest_framework',
     'rest_framework_simplejwt',
@@ -116,3 +118,15 @@ MEDIA_URL = '/media/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TINKOFF_TERMINAL_KEY = os.getenv('TINKOFF_TERMINAL_KEY')
+TINKOFF_PASSWORD = os.getenv('TINKOFF_PASSWORD')
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

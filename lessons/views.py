@@ -1,9 +1,11 @@
+import datetime
 from rest_framework import generics
 from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from lessons.serializers import LessonSerializer
 from lessons.models import Lesson
 from config.permissions import ModeratorPermission
+from payment.tasks import notify_if_course_content_changed
 
 
 class LessonListView(RetrieveModelMixin, UpdateModelMixin, generics.ListAPIView):
@@ -25,10 +27,18 @@ class LessonListView(RetrieveModelMixin, UpdateModelMixin, generics.ListAPIView)
     def patch(self, *args, **kwargs):
         return super().update(*args, **kwargs)
 
+    def perform_update(self, serializer):
+        instance = serializer.save(updated_at=datetime.datetime.now())
+        notify_if_course_content_changed.delay(instance.course_id)
+
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
     permission_classes = [IsAdminUser]
+
+    def perform_create(self, serializer):
+        instance = serializer.save(updated_at=datetime.datetime.now())
+        notify_if_course_content_changed.delay(instance.course_id)
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
